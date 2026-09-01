@@ -1,6 +1,6 @@
+from PySide import QtWidgets
 def SectionModulusIn(self:Part.Face,column_1_subscript = "",column_2_subscript = None):
 	from pandas import DataFrame #to_clipboard 
-	from PySide import QtWidgets
 	'''
 	displays height (h), y, I, and Section Mod (S) in inches^3 as a string and copies it to clipboard
 	'''

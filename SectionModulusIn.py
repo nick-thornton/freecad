@@ -3,6 +3,8 @@ def SectionModulusIn(self:Part.Face,column_1_subscript = "",column_2_subscript =
 	from pandas import DataFrame #to_clipboard 
 	'''
 	displays height (h), y, I, and Section Mod (S) in inches^3 as a string and copies it to clipboard
+	Part must be in xy plane, MOI is around x-axis.
+	General Workflow: Create sketch of Cross section, then Draft --> Upgade, select face, and run module
 	'''
 	if column_1_subscript == None:
 		column_1_subscript = ""
@@ -13,10 +15,10 @@ def SectionModulusIn(self:Part.Face,column_1_subscript = "",column_2_subscript =
 	else:
 		column_2_subscript = "_" + column_2_subscript
 	df = DataFrame([['Height','h',(self.BoundBox.YMax-self.BoundBox.YMin)/25.4,'in'],
-					['Neutral Axis','n',self.CenterOfMass[1]/25.4,'in'],
+					['Neutral Axis','n',(self.CenterOfMass[1]-self.BoundBox.YMin)/25.4,'in'],
 					['y','y','=MAX(n'+column_2_subscript+',h'+column_2_subscript+'-n'+column_2_subscript+')','in'],
-					['Moment of Inertia','h',self.MatrixOfInertia.A11/25.4**4,'in^4'],
-					['Area','a',self.Area/25.4**2,'in^2']])
+					['Moment of Inertia','I',self.MatrixOfInertia.A11/25.4**4,'in^4'],
+					['Area','A',self.Area/25.4**2,'in^2']])
 	df[0]+=column_1_subscript
 	df[1]+=column_2_subscript
 
